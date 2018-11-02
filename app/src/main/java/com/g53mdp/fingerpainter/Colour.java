@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -20,14 +21,27 @@ public class Colour extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colour);
-        init();
+
+        Bundle bundle = getIntent().getExtras();
+        init(bundle);
     }
 
-    private void init(){
+    private void init(Bundle bundle){
         for (int i = 0; i < colourarr.length; i++){
             Button btn = (Button) findViewById(buttonarr[i]);
             btn.setBackgroundColor(colourarr[i]);
         }
+
+        int currentColour = bundle.getInt("currentColour");
+
+        int index = IntStream.range(0, colourNameArr.length)
+                .filter(i -> currentColour == colourarr[i])
+                .findFirst().orElse(-1);
+        if (index == -1){
+            return;
+        }
+
+        Toast.makeText(getApplicationContext(), "Current Colour: " + colourNameArr[index], Toast.LENGTH_LONG).show();
     }
 
     public void onColourClick(View v){
@@ -41,6 +55,8 @@ public class Colour extends AppCompatActivity {
         }
 
         selectedColour = colourarr[index];
+
+        Toast.makeText(getApplicationContext(), "Colour Selected: " + colourNameArr[index], Toast.LENGTH_LONG).show();
 
     }
 
@@ -81,5 +97,17 @@ public class Colour extends AppCompatActivity {
             Color.LTGRAY,
             Color.CYAN,
             Color.MAGENTA
+    };
+
+    private String colourNameArr[] = {
+            "BLACK",
+            "YELLOW",
+            "BLUE",
+            "RED",
+            "WHITE",
+            "GREEN",
+            "LIGHT GREY",
+            "CYAN",
+            "MAGENTA"
     };
 }

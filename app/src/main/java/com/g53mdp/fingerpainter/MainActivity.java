@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public void onColourClick(View view) {
         Intent colour = new Intent(getApplicationContext(), Colour.class);
         Bundle extras = new Bundle();
+        int currentColour = myFingerPainterView.getColour();
+        extras.putInt("currentColour", currentColour);
         colour.putExtras(extras);
         startActivityForResult(colour, ACTIVITY_COLOUR_REQUEST_CODE);
     }
@@ -39,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
         Intent brush = new Intent(getApplicationContext(), Brush.class);
         Bundle extras = new Bundle();
         extras.putInt("currentSize", myFingerPainterView.getBrushWidth());
+
+        if (myFingerPainterView.getBrush() == Paint.Cap.ROUND){
+            extras.putString("currentShape", "round");
+        } else if (myFingerPainterView.getBrush() == Paint.Cap.SQUARE){
+            extras.putString("currentShape", "square");
+        }
+
         brush.putExtras(extras);
         startActivityForResult(brush, ACTIVITY_BRUSH_REQUEST_CODE);
     }
@@ -58,14 +67,17 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = data.getExtras();
                 selectedSize = bundle.getInt("selectedSize");
                 selectedShape = bundle.getString("selectedShape");
-                Log.d("selected size", selectedSize+"");
-                Log.d("selected shape", selectedShape);
 
-                if (selectedShape == "round" || selectedShape == ""){
+
+                if (selectedShape.equals("round") || selectedShape.equals("")){
                     myFingerPainterView.setBrush(Paint.Cap.ROUND);
-                } else if(selectedShape == "square"){
+                    Log.d("selected shape", "round");
+                } else if(selectedShape.equals("square")){
                     myFingerPainterView.setBrush(Paint.Cap.SQUARE);
+                    Log.d("selected shape", "square");
                 }
+
+
 
 
                 myFingerPainterView.setBrushWidth(selectedSize);
