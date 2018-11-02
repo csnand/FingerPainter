@@ -1,5 +1,6 @@
 package com.g53mdp.fingerpainter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Colour extends AppCompatActivity {
     private int selectedColour;
@@ -29,18 +31,31 @@ public class Colour extends AppCompatActivity {
     }
 
     public void onColourClick(View v){
-        int index = Arrays.asList(buttonarr).indexOf(v.getId());
+
+        //using IntStream to find the index of anb element in an array
+        int index = IntStream.range(0, buttonarr.length)
+                .filter(i -> v.getId() == buttonarr[i])
+                .findFirst().orElse(-1);
+        if (index == -1){
+            return;
+        }
+
         selectedColour = colourarr[index];
 
     }
 
-    public void onSetClick(){
-        Intent in = getIntent();
-        in.putExtra("colourcode", selectedColour);
-        Log.d("Colour", String.valueOf(selectedColour));
+    public void onSetClick(View v){
+        Intent in = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putInt("selectedColour", selectedColour);
+        in.putExtras(bundle);
+        setResult(Activity.RESULT_OK, in);
+        finish();
+
     }
 
-    public void onCancelClick() {
+    public void onCancelClick(View v) {
+        setResult(Activity.RESULT_CANCELED);
         finish();
     }
 

@@ -125,7 +125,8 @@
         android:layout_marginBottom="16dp"
         android:text="@string/setcolour"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="onSetClick"/>
 
     <Button
         android:id="@+id/cancelbutton"
@@ -140,7 +141,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.631"
-        app:layout_constraintStart_toEndOf="@+id/colourbutton" />
+        app:layout_constraintStart_toEndOf="@+id/colourbutton"
+        android:onClick="onCancelClick"/>
 
 
 </android.support.constraint.ConstraintLayout>
