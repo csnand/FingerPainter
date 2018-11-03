@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myFingerPainterView = (FingerPainterView)findViewById(R.id.fingerpainterview);
         myFingerPainterView.load(getIntent().getData());
+
+        //set default brush shape
+        myFingerPainterView.setBrush(Paint.Cap.ROUND);
     }
 
     static final int ACTIVITY_COLOUR_REQUEST_CODE = 1;
@@ -86,7 +89,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("selectedSize", selectedSize);
+        outState.putInt("selectedColour", selectedColour);
+        outState.putString("selectedShape", selectedShape);
+    }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
 
+        selectedSize = savedInstanceState.getInt("selectedSize");
+        selectedColour = savedInstanceState.getInt("selectedColour");
+        selectedShape = savedInstanceState.getString("selectedShape");
 
+        myFingerPainterView.setColour(selectedColour);
+        myFingerPainterView.setBrushWidth(selectedSize);
+
+        if (selectedShape.equals("round")){
+            myFingerPainterView.setBrush(Paint.Cap.ROUND);
+        } else if (selectedShape.equals("square")){
+            myFingerPainterView.setBrush(Paint.Cap.SQUARE);
+        }
+
+    }
 }
