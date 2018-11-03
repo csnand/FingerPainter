@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
         myFingerPainterView = (FingerPainterView)findViewById(R.id.fingerpainterview);
         myFingerPainterView.load(getIntent().getData());
 
-        //set default brush shape
-        myFingerPainterView.setBrush(Paint.Cap.ROUND);
+        //set default values
+        selectedColour = Color.BLACK;
+        selectedShape = "round";
+        selectedSize = 20;
     }
 
     static final int ACTIVITY_COLOUR_REQUEST_CODE = 1;

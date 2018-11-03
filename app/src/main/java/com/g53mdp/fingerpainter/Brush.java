@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class Brush extends AppCompatActivity {
 
     private int selectedSize;
-    private String selectedShape = "round";
+    private String selectedShape;
     private TextView progresstext;
 
     @Override
@@ -37,6 +37,9 @@ public class Brush extends AppCompatActivity {
 
         RadioGroup buttonGroup = (RadioGroup) findViewById(R.id.buttonGroup);
         String currentShape = bundle.getString("currentShape");
+
+        selectedShape = currentShape;
+
         if (currentShape.equals("round")){
             buttonGroup.check(R.id.roundbutton);
         } else if (currentShape.equals("square")){
